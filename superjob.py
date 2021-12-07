@@ -51,7 +51,10 @@ def get_superjob_job_openings(programming_languages):
             if salary is not None:
                 salaries.append(salary)
 
-            programming_languages[language]['vacancies_processed'] = len(salaries)
+        programming_languages[language]['vacancies_processed'] = len(salaries)
+        try:
             programming_languages[language]['average_salary'] = int(sum(salaries) / len(salaries))
+        except ZeroDivisionError:
+            print(f'Для языка {language} ваканский не найдено!')
 
     return programming_languages

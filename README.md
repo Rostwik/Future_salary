@@ -2,7 +2,7 @@
 
 Программа использует API сервисы крупнейших российских компаний интернет-рекрутмента: [HH](https://hh.ru/) и [Superjob](https://www.superjob.ru/) для
 поиска вакансий по самым распространенным языкам программирования, данные выводит в консоль в удобном формате.
-Описание API находится по адресу: [API HH](https://github.com/hhru/api) и [API SuperJob]https://api.superjob.ru/  соответственно.
+Описание API находится по адресу: [API HH](https://github.com/hhru/api) и [API SuperJob](https://api.superjob.ru/)  соответственно.
 
 # Требования к окружению
 

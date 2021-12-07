@@ -21,8 +21,8 @@ def main():
         'Scratch': {},
     }
 
-    hh_jobs = get_hh_job_openings(programming_languages)
-    table_view(hh_jobs, 'HeadHunter Moscow')
+    # hh_jobs = get_hh_job_openings(programming_languages)
+    # table_view(hh_jobs, 'HeadHunter Moscow')
     superjobs_jobs = get_superjob_job_openings(programming_languages)
     table_view(superjobs_jobs, 'SuperJob Moscow')
 
