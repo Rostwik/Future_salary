@@ -20,7 +20,7 @@ def predict_rub_salary_for_superjob(vacancy):
 
 
 def get_superjob_job_openings(programming_languages):
-    superjob_token = os.getenv('SECRET_KEY')
+    superjob_token = os.getenv('SUPERJOB_SECRET_KEY')
     superjob_header = {'X-Api-App-Id': superjob_token}
     url = 'https://api.superjob.ru/2.0/vacancies'
     for language in programming_languages:

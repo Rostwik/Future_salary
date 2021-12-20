@@ -16,5 +16,3 @@ def table_view(programming_languages, title):
 
     table_instance = AsciiTable(output_data, title)
     table_instance.justify_columns[3] = 'right'
-    print(table_instance.table)
-    print()
