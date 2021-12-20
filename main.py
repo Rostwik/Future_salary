@@ -2,7 +2,7 @@ from dotenv import load_dotenv
 
 from hh import get_hh_job_openings
 from superjob import get_superjob_job_openings
-from table_view import displaying_vacancies
+from table_view import get_vacancies_table
 
 
 def main():
@@ -22,9 +22,11 @@ def main():
     }
 
     hh_jobs = get_hh_job_openings(programming_languages)
-    displaying_vacancies(hh_jobs, 'HeadHunter Moscow')
+    table_instance = get_vacancies_table(hh_jobs, 'HeadHunter Moscow')
+    print(table_instance.table)
     superjobs_jobs = get_superjob_job_openings(programming_languages)
-    displaying_vacancies(superjobs_jobs, 'SuperJob Moscow')
+    table_instance = get_vacancies_table(superjobs_jobs, 'SuperJob Moscow')
+    print(table_instance.table)
 
 
 if __name__ == '__main__':
