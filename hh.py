@@ -24,7 +24,7 @@ def get_hh_job_openings(programming_languages):
         pages_number = 1
         page = 0
         salaries = []
-        items = []
+        jobs = []
 
         while page < pages_number:
             payload = {
@@ -40,11 +40,11 @@ def get_hh_job_openings(programming_languages):
             programming_languages[language]['vacancies_found'] = page_response.json()['found']
             page += 1
             for item in page_response.json()['items']:
-                items.append(item)
+                jobs.append(item)
 
-        for vacancy in items:
+        for job in jobs:
 
-            salary = predict_rub_salary(vacancy['salary'])
+            salary = predict_rub_salary(job['salary'])
             if salary is not None:
                 salaries.append(salary)
 

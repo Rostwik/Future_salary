@@ -2,17 +2,17 @@ from terminaltables import AsciiTable
 
 
 def displaying_vacancies(programming_languages, title):
-    output_data = [['Язык программирования', 'Вакансий найдено', 'Вакансий обработано', 'Средняя зарплата']]
+    column_headers = [['Язык программирования', 'Вакансий найдено', 'Вакансий обработано', 'Средняя зарплата']]
 
     for language, details in programming_languages.items():
 
         if details['vacancies_found']:
-            output_data.append([
+            column_headers.append([
                 language,
                 details['vacancies_found'],
                 details['vacancies_processed'],
                 details['average_salary'],
             ])
 
-    table_instance = AsciiTable(output_data, title)
+    table_instance = AsciiTable(column_headers, title)
     table_instance.justify_columns[3] = 'right'

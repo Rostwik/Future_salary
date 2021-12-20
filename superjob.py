@@ -26,7 +26,7 @@ def get_superjob_job_openings(programming_languages):
     for language in programming_languages:
         page = 0
         number_pages = 1
-        items = []
+        jobs = []
         salaries = []
         while page < number_pages:
             payloads = {
@@ -44,10 +44,10 @@ def get_superjob_job_openings(programming_languages):
             programming_languages[language]['vacancies_found'] = response.json()['total']
             page += 1
             for item in response.json()['objects']:
-                items.append(item)
+                jobs.append(item)
 
-        for vacancy in items:
-            salary = predict_rub_salary_for_superjob(vacancy)
+        for job in jobs:
+            salary = predict_rub_salary_for_superjob(job)
             if salary is not None:
                 salaries.append(salary)
 
