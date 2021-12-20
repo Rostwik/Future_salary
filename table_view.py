@@ -1,7 +1,7 @@
 from terminaltables import AsciiTable
 
 
-def table_view(programming_languages, title):
+def displaying_vacancies(programming_languages, title):
     output_data = [['Язык программирования', 'Вакансий найдено', 'Вакансий обработано', 'Средняя зарплата']]
 
     for language, details in programming_languages.items():
