@@ -8,18 +8,18 @@ from table_view import get_vacancies_table
 def main():
     load_dotenv()
 
-    programming_languages = {
-        'Java': {},
-        'C': {},
-        'Python': {},
-        'C++': {},
-        'Go': {},
-        'C#': {},
-        'Fortran': {},
-        'JavaScript': {},
-        'РНР': {},
-        'Scratch': {},
-    }
+    programming_languages = [
+        'Java',
+        'C',
+        'Python',
+        'C++',
+        'Go',
+        'C#',
+        'Fortran',
+        'JavaScript',
+        'РНР',
+        'Scratch',
+    ]
 
     hh_jobs = get_hh_job_openings(programming_languages)
     table_instance = get_vacancies_table(hh_jobs, 'HeadHunter Moscow')

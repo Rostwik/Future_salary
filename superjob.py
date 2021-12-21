@@ -19,11 +19,13 @@ def predict_rub_salary_for_superjob(vacancy):
     return average_salary
 
 
-def get_superjob_job_openings(programming_languages):
+def get_superjob_job_openings(keywords):
     superjob_token = os.getenv('SUPERJOB_SECRET_KEY')
     superjob_header = {'X-Api-App-Id': superjob_token}
     url = 'https://api.superjob.ru/2.0/vacancies'
-    for language in programming_languages:
+    job_analysis_result = {x: {} for x in keywords}
+
+    for keyword in keywords:
         page = 0
         number_pages = 1
         jobs = []
@@ -34,14 +36,14 @@ def get_superjob_job_openings(programming_languages):
                 'catalogues': 48,
                 'page': page,
                 'count': 20,
-                'keyword': language
+                'keyword': keyword
             }
 
             response = requests.get(url, headers=superjob_header, params=payloads)
             response.raise_for_status()
 
             number_pages = response.json()['total'] / payloads['count']
-            programming_languages[language]['vacancies_found'] = response.json()['total']
+            job_analysis_result[keyword]['vacancies_found'] = response.json()['total']
             page += 1
             for item in response.json()['objects']:
                 jobs.append(item)
@@ -51,10 +53,10 @@ def get_superjob_job_openings(programming_languages):
             if salary is not None:
                 salaries.append(salary)
 
-        programming_languages[language]['vacancies_processed'] = len(salaries)
+        job_analysis_result[keyword]['vacancies_processed'] = len(salaries)
         try:
-            programming_languages[language]['average_salary'] = int(sum(salaries) / len(salaries))
+            job_analysis_result[keyword]['average_salary'] = int(sum(salaries) / len(salaries))
         except ZeroDivisionError:
-            print(f'Для языка {language} ваканский не найдено!')
+            print(f'Для языка {keyword} ваканский не найдено!')
 
-    return programming_languages
+    return job_analysis_result

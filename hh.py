@@ -17,8 +17,10 @@ def predict_rub_salary(salary):
     return average_salary
 
 
-def get_hh_job_openings(programming_languages):
-    for language in programming_languages:
+def get_hh_job_openings(keywords):
+    job_analysis_result = {x: {} for x in keywords}
+
+    for keyword in keywords:
 
         url = "https://api.hh.ru/vacancies"
 
@@ -29,7 +31,7 @@ def get_hh_job_openings(programming_languages):
 
         while page < pages_number:
             payload = {
-                'text': language,
+                'text': keyword,
                 'page': page,
                 'per_page': 20
             }
@@ -37,7 +39,7 @@ def get_hh_job_openings(programming_languages):
             page_response.raise_for_status()
 
             pages_number = page_response.json()['pages']
-            programming_languages[language]['vacancies_found'] = page_response.json()['found']
+            job_analysis_result[keyword]['vacancies_found'] = page_response.json()['found']
             page += 1
             for item in page_response.json()['items']:
                 jobs.append(item)
@@ -48,10 +50,10 @@ def get_hh_job_openings(programming_languages):
                 if salary is not None:
                     salaries.append(salary)
 
-        programming_languages[language]['vacancies_processed'] = len(salaries)
+        job_analysis_result[keyword]['vacancies_processed'] = len(salaries)
         try:
-            programming_languages[language]['average_salary'] = int(sum(salaries) / len(salaries))
+            job_analysis_result[keyword]['average_salary'] = int(sum(salaries) / len(salaries))
         except ZeroDivisionError:
-            print(f'Для языка {language} ваканский не найдено!')
+            print(f'Для языка {keyword} ваканский не найдено!')
 
-    return programming_languages
+    return job_analysis_result
