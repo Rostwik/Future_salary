@@ -1,6 +1,6 @@
 import requests
 
-from predict_salary import predict_rub_salary
+from predict_salary import predict_rub_salary, save_job_analysis
 
 
 def get_hh_job_openings(keywords):
@@ -36,10 +36,6 @@ def get_hh_job_openings(keywords):
                 if salary is not None:
                     salaries.append(salary)
 
-        job_analysis_result[keyword]['vacancies_processed'] = len(salaries)
-        try:
-            job_analysis_result[keyword]['average_salary'] = int(sum(salaries) / len(salaries))
-        except ZeroDivisionError:
-            print(f'Для языка {keyword} ваканский не найдено!')
+        save_job_analysis(job_analysis_result, keyword, salaries)
 
     return job_analysis_result

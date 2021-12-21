@@ -1,6 +1,6 @@
 import requests
 
-from predict_salary import predict_rub_salary
+from predict_salary import predict_rub_salary, save_job_analysis
 
 
 def get_superjob_job_openings(keywords, superjob_token):
@@ -36,12 +36,9 @@ def get_superjob_job_openings(keywords, superjob_token):
             if salary is not None:
                 salaries.append(salary)
 
-        job_analysis_result[keyword]['vacancies_processed'] = len(salaries)
-        try:
-            job_analysis_result[keyword]['average_salary'] = int(sum(salaries) / len(salaries))
-        except ZeroDivisionError:
-            job_analysis_result[keyword]['vacancies_found'] = 0
-            job_analysis_result[keyword]['vacancies_processed'] = 0
-            job_analysis_result[keyword]['average_salary'] = 0
+        save_job_analysis(job_analysis_result, keyword, salaries)
 
     return job_analysis_result
+
+
+
