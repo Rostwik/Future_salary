@@ -1,5 +1,3 @@
-import os
-
 import requests
 
 
@@ -19,8 +17,7 @@ def predict_rub_salary_for_superjob(vacancy):
     return average_salary
 
 
-def get_superjob_job_openings(keywords):
-    superjob_token = os.getenv('SUPERJOB_SECRET_KEY')
+def get_superjob_job_openings(keywords, superjob_token):
     superjob_header = {'X-Api-App-Id': superjob_token}
     url = 'https://api.superjob.ru/2.0/vacancies'
     job_analysis_result = {x: {} for x in keywords}
