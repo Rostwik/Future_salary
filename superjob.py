@@ -40,6 +40,8 @@ def get_superjob_job_openings(keywords, superjob_token):
         try:
             job_analysis_result[keyword]['average_salary'] = int(sum(salaries) / len(salaries))
         except ZeroDivisionError:
-            print(f'Для языка {keyword} ваканский не найдено!')
+            job_analysis_result[keyword]['vacancies_found'] = 0
+            job_analysis_result[keyword]['vacancies_processed'] = 0
+            job_analysis_result[keyword]['average_salary'] = 0
 
     return job_analysis_result
