@@ -11,6 +11,8 @@ def collect_statistics(jobs, salaries):
 
 
 def get_superjob_job_openings(keywords, superjob_token):
+    MOSCOW_CODE = 4
+    DEVELOPMENT_CATEGORY = 48
     superjob_header = {'X-Api-App-Id': superjob_token}
     url = 'https://api.superjob.ru/2.0/vacancies'
     job_analysis_result = {x: {} for x in keywords}
@@ -22,8 +24,8 @@ def get_superjob_job_openings(keywords, superjob_token):
         salaries = []
         while page < number_pages:
             payloads = {
-                'town': 4,
-                'catalogues': 48,
+                'town': MOSCOW_CODE,
+                'catalogues': DEVELOPMENT_CATEGORY,
                 'page': page,
                 'count': 20,
                 'keyword': keyword
