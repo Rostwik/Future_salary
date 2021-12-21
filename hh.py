@@ -1,20 +1,6 @@
 import requests
 
-
-def predict_rub_salary(salary):
-    if salary['currency'] != 'RUR':
-        average_salary = None
-
-    elif salary['from'] is not None and salary['to'] is None:
-        average_salary = salary['from'] * 1.2
-
-    elif salary['from'] is None and salary['to'] is not None:
-        average_salary = salary['to'] * 0.8
-
-    else:
-        average_salary = (salary['from'] + salary['to']) / 2
-
-    return average_salary
+from predict_salary import predict_rub_salary
 
 
 def get_hh_job_openings(keywords):
@@ -46,7 +32,7 @@ def get_hh_job_openings(keywords):
 
         for job in jobs:
             if job['salary']:
-                salary = predict_rub_salary(job['salary'])
+                salary = predict_rub_salary(job['salary']['from'], job['salary']['to'], job['salary']['currency'])
                 if salary is not None:
                     salaries.append(salary)
 

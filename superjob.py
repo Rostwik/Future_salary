@@ -1,20 +1,6 @@
 import requests
 
-
-def predict_rub_salary_for_superjob(vacancy):
-    if vacancy['payment_from'] == 0 and vacancy['payment_to'] == 0:
-        average_salary = None
-
-    elif vacancy['payment_from'] != 0 and vacancy['payment_to'] == 0:
-        average_salary = vacancy['payment_from'] * 1.2
-
-    elif vacancy['payment_from'] == 0 and vacancy['payment_to'] != 0:
-        average_salary = vacancy['payment_to'] * 0.8
-
-    else:
-        average_salary = (vacancy['payment_from'] + vacancy['payment_to']) / 2
-
-    return average_salary
+from predict_salary import predict_rub_salary
 
 
 def get_superjob_job_openings(keywords, superjob_token):
@@ -46,7 +32,7 @@ def get_superjob_job_openings(keywords, superjob_token):
                 jobs.append(item)
 
         for job in jobs:
-            salary = predict_rub_salary_for_superjob(job)
+            salary = predict_rub_salary(job['payment_from'], job['payment_to'])
             if salary is not None:
                 salaries.append(salary)
 
