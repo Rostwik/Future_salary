@@ -3,6 +3,14 @@ import requests
 from predict_salary import predict_rub_salary, save_job_analysis
 
 
+def collect_statistics(jobs, salaries):
+    for job in jobs:
+        if job['salary']:
+            salary = predict_rub_salary(job['salary']['from'], job['salary']['to'], job['salary']['currency'])
+            if salary is not None:
+                salaries.append(salary)
+
+
 def get_hh_job_openings(keywords):
     job_analysis_result = {x: {} for x in keywords}
 
@@ -30,11 +38,7 @@ def get_hh_job_openings(keywords):
             for item in page_response.json()['items']:
                 jobs.append(item)
 
-        for job in jobs:
-            if job['salary']:
-                salary = predict_rub_salary(job['salary']['from'], job['salary']['to'], job['salary']['currency'])
-                if salary is not None:
-                    salaries.append(salary)
+        collect_statistics(jobs, salaries)
 
         save_job_analysis(job_analysis_result, keyword, salaries)
 
