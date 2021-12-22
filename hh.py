@@ -1,3 +1,5 @@
+import itertools
+
 import requests
 
 from predict_salary import predict_rub_salary, save_job_analysis
@@ -19,11 +21,12 @@ def get_hh_job_openings(keywords):
         url = "https://api.hh.ru/vacancies"
 
         pages_number = 1
-        page = 0
         salaries = []
         jobs = []
 
-        while page < pages_number:
+        for page in itertools.count():
+            if page == pages_number:
+                break
             payload = {
                 'text': keyword,
                 'page': page,
@@ -34,9 +37,7 @@ def get_hh_job_openings(keywords):
 
             pages_number = page_response.json()['pages']
             job_analysis_result[keyword]['vacancies_found'] = page_response.json()['found']
-            page += 1
-            for item in page_response.json()['items']:
-                jobs.append(item)
+            jobs.extend(page_response.json()['items'])
 
         collect_statistics(jobs, salaries)
 

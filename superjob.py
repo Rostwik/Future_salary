@@ -1,3 +1,5 @@
+import itertools
+
 import requests
 
 from predict_salary import predict_rub_salary, save_job_analysis
@@ -18,11 +20,12 @@ def get_superjob_job_openings(keywords, superjob_token):
     job_analysis_result = {x: {} for x in keywords}
 
     for keyword in keywords:
-        page = 0
         number_pages = 1
         jobs = []
         salaries = []
-        while page < number_pages:
+        for page in itertools.count():
+            if page > number_pages:
+                break
             payloads = {
                 'town': MOSCOW_CODE,
                 'catalogues': DEVELOPMENT_CATEGORY,
@@ -37,8 +40,7 @@ def get_superjob_job_openings(keywords, superjob_token):
             number_pages = response.json()['total'] / payloads['count']
             job_analysis_result[keyword]['vacancies_found'] = response.json()['total']
             page += 1
-            for item in response.json()['objects']:
-                jobs.append(item)
+            jobs.extend(response.json()['objects'])
 
         collect_statistics(jobs, salaries)
 
