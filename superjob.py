@@ -2,24 +2,10 @@ import itertools
 
 import requests
 
-from predict_salary import predict_rub_salary
+from predict_salary import predict_rub_salary, save_analysis_result
 
 MOSCOW_CODE = 4
 DEVELOPMENT_CATEGORY = 48
-
-
-def save_analysis_result(keyword, salaries, vacancies_found, job_analysis_result):
-
-    job_analysis_result[keyword]['vacancies_processed'] = len(salaries)
-    job_analysis_result[keyword]['vacancies_found'] = vacancies_found
-    try:
-        job_analysis_result[keyword]['average_salary'] = int(sum(salaries) / len(salaries))
-    except ZeroDivisionError:
-        job_analysis_result[keyword]['vacancies_found'] = 0
-        job_analysis_result[keyword]['vacancies_processed'] = 0
-        job_analysis_result[keyword]['average_salary'] = 0
-
-    return job_analysis_result
 
 
 def collecting_job_statistics(keyword, superjob_header, url):
