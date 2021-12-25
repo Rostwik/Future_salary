@@ -13,8 +13,10 @@ def collecting_job_statistics(keyword, url):
     }
     page_response = requests.get(url, params=payload)
     page_response.raise_for_status()
-    pages_number = page_response.json()['pages']
-    vacancies_found = page_response.json()['found']
+    page_response = page_response.json()
+    pages_number = page_response['pages']
+    vacancies_found = page_response['found']
+
     for page in itertools.count():
         if page == pages_number:
             break
@@ -28,10 +30,10 @@ def collecting_job_statistics(keyword, url):
 
         jobs.extend(page_response.json()['items'])
     for job in jobs:
-        if job['salary']:
-            salary = predict_rub_salary(job['salary']['from'], job['salary']['to'], job['salary']['currency'])
-            if salary is not None:
-                salaries.append(salary)
+        if job['salary'] and job['salary']['currency'] == 'RUR':
+            salary = predict_rub_salary(job['salary']['from'], job['salary']['to'])
+            salaries.append(salary)
+
     return salaries, vacancies_found
 
 

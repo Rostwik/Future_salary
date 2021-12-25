@@ -25,8 +25,6 @@ def collecting_job_statistics(keyword, superjob_header, url):
     vacancies_found = response.json()['total']
 
     for page in itertools.count():
-        if page > number_pages:
-            break
 
         payloads = {
             'town': MOSCOW_CODE,
@@ -37,12 +35,16 @@ def collecting_job_statistics(keyword, superjob_header, url):
         }
         response = requests.get(url, headers=superjob_header, params=payloads)
         response.raise_for_status()
+        json_response = response.json()
 
-        jobs.extend(response.json()['objects'])
+        jobs.extend(json_response['objects'])
+
+        if not json_response['more']:
+            break
 
     for job in jobs:
-        salary = predict_rub_salary(job['payment_from'], job['payment_to'])
-        if salary is not None:
+        if job['currency'] == "rub":
+            salary = predict_rub_salary(job['payment_from'], job['payment_to'])
             salaries.append(salary)
 
     return salaries, vacancies_found

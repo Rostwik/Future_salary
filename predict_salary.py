@@ -1,13 +1,12 @@
-def predict_rub_salary(salary_from, salary_to, currency='RUR'):
-    if currency != 'RUR':
-        average_salary = None
-
-    elif salary_from and not salary_to:
+def predict_rub_salary(salary_from, salary_to):
+    if salary_from and not salary_to:
         average_salary = salary_from * 1.2
 
     elif not salary_from and salary_to:
         average_salary = salary_to * 0.8
 
+    elif not salary_from and not salary_to:
+        average_salary = 0
     else:
         average_salary = (salary_from + salary_to) / 2
 
@@ -15,7 +14,6 @@ def predict_rub_salary(salary_from, salary_to, currency='RUR'):
 
 
 def save_analysis_result(keyword, salaries, vacancies_found, job_analysis_result):
-
     job_analysis_result[keyword]['vacancies_processed'] = len(salaries)
     job_analysis_result[keyword]['vacancies_found'] = vacancies_found
     try:
