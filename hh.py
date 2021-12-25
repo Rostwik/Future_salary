@@ -2,15 +2,7 @@ import itertools
 
 import requests
 
-from predict_salary import predict_rub_salary, save_job_analysis
-
-
-def collect_statistics(jobs, salaries):
-    for job in jobs:
-        if job['salary']:
-            salary = predict_rub_salary(job['salary']['from'], job['salary']['to'], job['salary']['currency'])
-            if salary is not None:
-                salaries.append(salary)
+from predict_salary import predict_rub_salary
 
 
 def get_hh_job_openings(keywords):
@@ -39,8 +31,18 @@ def get_hh_job_openings(keywords):
             job_analysis_result[keyword]['vacancies_found'] = page_response.json()['found']
             jobs.extend(page_response.json()['items'])
 
-        collect_statistics(jobs, salaries)
+        for job in jobs:
+            if job['salary']:
+                salary = predict_rub_salary(job['salary']['from'], job['salary']['to'], job['salary']['currency'])
+                if salary is not None:
+                    salaries.append(salary)
 
-        save_job_analysis(job_analysis_result, keyword, salaries)
+        job_analysis_result[keyword]['vacancies_processed'] = len(salaries)
+        try:
+            job_analysis_result[keyword]['average_salary'] = int(sum(salaries) / len(salaries))
+        except ZeroDivisionError:
+            job_analysis_result[keyword]['vacancies_found'] = 0
+            job_analysis_result[keyword]['vacancies_processed'] = 0
+            job_analysis_result[keyword]['average_salary'] = 0
 
     return job_analysis_result
