@@ -45,9 +45,8 @@ def get_hh_job_statistics(keywords):
 
         salaries, vacancies_found = get_keyword_statistics(keyword, url)
 
-        job_analysis_copy = {**job_analysis}
-        job_analysis = save_analysis_result(
-            keyword, salaries, vacancies_found, job_analysis_copy
+        job_analysis[keyword] = save_analysis_result(
+            salaries, vacancies_found
         )
 
     return job_analysis

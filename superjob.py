@@ -51,9 +51,8 @@ def get_superjob_job_statistics(keywords, superjob_token):
             keyword, superjob_header, url, MOSCOW_CODE, DEVELOPMENT_CATEGORY
         )
 
-        job_analysis_copy = {**job_analysis}
-        job_analysis = save_analysis_result(
-            keyword, salaries, vacancies_found, job_analysis_copy
+        job_analysis[keyword] = save_analysis_result(
+            salaries, vacancies_found
         )
 
     return job_analysis
