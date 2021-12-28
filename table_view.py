@@ -1,7 +1,7 @@
 from terminaltables import AsciiTable
 
 
-def get_vacancies_table(programming_languages, title):
+def get_vacancies_table(vacancy_statistics, title):
     table_rows = [[
         'Язык программирования',
         'Вакансий найдено',
@@ -9,7 +9,7 @@ def get_vacancies_table(programming_languages, title):
         'Средняя зарплата'
     ]]
 
-    for language, details in programming_languages.items():
+    for language, details in vacancy_statistics.items():
         table_rows.append([
             language,
             details['vacancies_found'],

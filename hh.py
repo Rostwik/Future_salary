@@ -37,7 +37,7 @@ def collecting_job_statistics(keyword, url):
     return salaries, vacancies_found
 
 
-def get_hh_job_openings(keywords):
+def get_hh_job_statistics(keywords):
     job_analysis_result = {x: {} for x in keywords}
 
     for keyword in keywords:

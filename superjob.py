@@ -21,7 +21,6 @@ def collecting_job_statistics(keyword, superjob_header, url):
     response = requests.get(url, headers=superjob_header, params=payloads)
     response.raise_for_status()
 
-    number_pages = response.json()['total'] / payloads['count']
     vacancies_found = response.json()['total']
 
     for page in itertools.count():
@@ -50,7 +49,7 @@ def collecting_job_statistics(keyword, superjob_header, url):
     return salaries, vacancies_found
 
 
-def get_superjob_job_openings(keywords, superjob_token):
+def get_superjob_job_statistics(keywords, superjob_token):
     superjob_header = {'X-Api-App-Id': superjob_token}
     url = 'https://api.superjob.ru/2.0/vacancies'
     job_analysis_result = {x: {} for x in keywords}
