@@ -12,17 +12,6 @@ def get_keyword_statistics(keyword, superjob_header, url):
     jobs = []
     salaries = []
 
-    payloads = {
-        'town': MOSCOW_CODE,
-        'catalogues': DEVELOPMENT_CATEGORY,
-        'count': 20,
-        'keyword': keyword
-    }
-    response = requests.get(url, headers=superjob_header, params=payloads)
-    response.raise_for_status()
-
-    vacancies_found = response.json()['total']
-
     for page in itertools.count():
 
         payloads = {
@@ -34,12 +23,14 @@ def get_keyword_statistics(keyword, superjob_header, url):
         }
         response = requests.get(url, headers=superjob_header, params=payloads)
         response.raise_for_status()
-        json_response = response.json()
+        page_response = response.json()
 
-        jobs.extend(json_response['objects'])
+        jobs.extend(page_response['objects'])
 
-        if not json_response['more']:
+        if not page_response['more']:
             break
+
+    vacancies_found = page_response['total']
 
     for job in jobs:
         if job['currency'] == "rub":
@@ -59,9 +50,9 @@ def get_superjob_job_statistics(keywords, superjob_token):
             keyword, superjob_header, url
         )
 
-        job_analysis_result_copy = {**job_analysis}
-        job_analysis_result = save_analysis_result(
-            keyword, salaries, vacancies_found, job_analysis_result_copy
+        job_analysis_copy = {**job_analysis}
+        job_analysis = save_analysis_result(
+            keyword, salaries, vacancies_found, job_analysis_copy
         )
 
     return job_analysis

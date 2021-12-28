@@ -2,8 +2,8 @@ import os
 
 from dotenv import load_dotenv
 
-from hh import get_hh_job_openings
-from superjob import get_superjob_job_openings
+from hh import get_hh_job_statistics
+from superjob import get_superjob_job_statistics
 from table_view import get_vacancies_table
 
 
