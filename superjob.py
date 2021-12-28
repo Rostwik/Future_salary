@@ -52,16 +52,16 @@ def collecting_job_statistics(keyword, superjob_header, url):
 def get_superjob_job_statistics(keywords, superjob_token):
     superjob_header = {'X-Api-App-Id': superjob_token}
     url = 'https://api.superjob.ru/2.0/vacancies'
-    job_analysis_result = {x: {} for x in keywords}
+    job_analysis = {x: {} for x in keywords}
 
     for keyword in keywords:
         salaries, vacancies_found = collecting_job_statistics(
             keyword, superjob_header, url
         )
 
-        job_analysis_result_copy = {**job_analysis_result}
+        job_analysis_result_copy = {**job_analysis}
         job_analysis_result = save_analysis_result(
             keyword, salaries, vacancies_found, job_analysis_result_copy
         )
 
-    return job_analysis_result
+    return job_analysis

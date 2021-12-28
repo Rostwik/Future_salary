@@ -38,16 +38,16 @@ def collecting_job_statistics(keyword, url):
 
 
 def get_hh_job_statistics(keywords):
-    job_analysis_result = {x: {} for x in keywords}
+    job_analysis = {x: {} for x in keywords}
 
     for keyword in keywords:
         url = "https://api.hh.ru/vacancies"
 
         salaries, vacancies_found = collecting_job_statistics(keyword, url)
 
-        job_analysis_result_copy = {**job_analysis_result}
-        job_analysis_result = save_analysis_result(
-            keyword, salaries, vacancies_found, job_analysis_result_copy
+        job_analysis_copy = {**job_analysis}
+        job_analysis = save_analysis_result(
+            keyword, salaries, vacancies_found, job_analysis_copy
         )
 
-    return job_analysis_result
+    return job_analysis
