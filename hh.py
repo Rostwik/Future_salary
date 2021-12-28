@@ -5,7 +5,7 @@ import requests
 from predict_salary import predict_rub_salary, save_analysis_result
 
 
-def collecting_job_statistics(keyword, url):
+def get_keyword_statistics(keyword, url):
     salaries = []
     jobs = []
     payload = {
@@ -43,7 +43,7 @@ def get_hh_job_statistics(keywords):
     for keyword in keywords:
         url = "https://api.hh.ru/vacancies"
 
-        salaries, vacancies_found = collecting_job_statistics(keyword, url)
+        salaries, vacancies_found = get_keyword_statistics(keyword, url)
 
         job_analysis_copy = {**job_analysis}
         job_analysis = save_analysis_result(

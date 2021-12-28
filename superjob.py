@@ -8,7 +8,7 @@ MOSCOW_CODE = 4
 DEVELOPMENT_CATEGORY = 48
 
 
-def collecting_job_statistics(keyword, superjob_header, url):
+def get_keyword_statistics(keyword, superjob_header, url):
     jobs = []
     salaries = []
 
@@ -55,7 +55,7 @@ def get_superjob_job_statistics(keywords, superjob_token):
     job_analysis = {x: {} for x in keywords}
 
     for keyword in keywords:
-        salaries, vacancies_found = collecting_job_statistics(
+        salaries, vacancies_found = get_keyword_statistics(
             keyword, superjob_header, url
         )
 
