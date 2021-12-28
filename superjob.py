@@ -35,7 +35,8 @@ def get_keyword_statistics(keyword, superjob_header, url, town_code, category_co
     for job in jobs:
         if job['currency'] == "rub":
             salary = predict_rub_salary(job['payment_from'], job['payment_to'])
-            salaries.append(salary)
+            if salary:
+                salaries.append(salary)
 
     return salaries, vacancies_found
 

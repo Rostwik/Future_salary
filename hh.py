@@ -31,7 +31,8 @@ def get_keyword_statistics(keyword, url):
     for job in jobs:
         if job['salary'] and job['salary']['currency'] == 'RUR':
             salary = predict_rub_salary(job['salary']['from'], job['salary']['to'])
-            salaries.append(salary)
+            if salary:
+                salaries.append(salary)
 
     return salaries, vacancies_found
 
