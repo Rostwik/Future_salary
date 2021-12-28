@@ -23,7 +23,7 @@ def get_keyword_statistics(keyword, url):
 
         jobs.extend(page_response['items'])
 
-        if page == 99:
+        if page == pages_number - 1:
             break
 
     vacancies_found = page_response['found']
