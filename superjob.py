@@ -8,15 +8,15 @@ MOSCOW_CODE = 4
 DEVELOPMENT_CATEGORY = 48
 
 
-def get_keyword_statistics(keyword, superjob_header, url):
+def get_keyword_statistics(keyword, superjob_header, url, town_code, category_code):
     jobs = []
     salaries = []
 
     for page in itertools.count():
 
         payloads = {
-            'town': MOSCOW_CODE,
-            'catalogues': DEVELOPMENT_CATEGORY,
+            'town': town_code,
+            'catalogues': category_code,
             'page': page,
             'count': 20,
             'keyword': keyword
@@ -47,7 +47,7 @@ def get_superjob_job_statistics(keywords, superjob_token):
 
     for keyword in keywords:
         salaries, vacancies_found = get_keyword_statistics(
-            keyword, superjob_header, url
+            keyword, superjob_header, url, MOSCOW_CODE, DEVELOPMENT_CATEGORY
         )
 
         job_analysis_copy = {**job_analysis}
