@@ -8,7 +8,8 @@ MOSCOW_CODE = 4
 DEVELOPMENT_CATEGORY = 48
 
 
-def get_keyword_statistics(keyword, superjob_header, url, town_code, category_code):
+def get_keyword_statistics(keyword, superjob_header, town_code, category_code):
+    url = 'https://api.superjob.ru/2.0/vacancies'
     jobs = []
     salaries = []
 
@@ -43,12 +44,12 @@ def get_keyword_statistics(keyword, superjob_header, url, town_code, category_co
 
 def get_superjob_job_statistics(keywords, superjob_token):
     superjob_header = {'X-Api-App-Id': superjob_token}
-    url = 'https://api.superjob.ru/2.0/vacancies'
+
     job_analysis = {x: {} for x in keywords}
 
     for keyword in keywords:
         salaries, vacancies_found = get_keyword_statistics(
-            keyword, superjob_header, url, MOSCOW_CODE, DEVELOPMENT_CATEGORY
+            keyword, superjob_header, MOSCOW_CODE, DEVELOPMENT_CATEGORY
         )
 
         job_analysis[keyword] = save_analysis_result(
