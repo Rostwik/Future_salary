@@ -13,19 +13,22 @@ def predict_rub_salary(salary_from, salary_to):
     return average_salary
 
 
-def save_analysis_result(salaries, vacancies_found):
+def get_analytics(salaries, vacancies_found):
     try:
-        job_analysis = {
-            'vacancies_processed': len(salaries),
-            'vacancies_found': vacancies_found,
-            'average_salary': int(sum(salaries) / len(salaries))
-        }
+        sum(salaries) / len(salaries)
 
     except ZeroDivisionError:
         job_analysis = {
                 'vacancies_processed': 0,
                 'vacancies_found': 0,
                 'average_salary': 0
+        }
+
+    else:
+        job_analysis = {
+            'vacancies_processed': len(salaries),
+            'vacancies_found': vacancies_found,
+            'average_salary': int(sum(salaries) / len(salaries))
         }
 
     return job_analysis

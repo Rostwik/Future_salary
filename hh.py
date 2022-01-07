@@ -2,10 +2,10 @@ import itertools
 
 import requests
 
-from predict_salary import predict_rub_salary, save_analysis_result
+from predict_salary import predict_rub_salary, get_analytics
 
 
-def get_keyword_statistics(keyword):
+def get_keyword_statistics(keyword, town_code):
     url = "https://api.hh.ru/vacancies"
     salaries = []
     jobs = []
@@ -15,6 +15,7 @@ def get_keyword_statistics(keyword):
         payload = {
             'text': keyword,
             'page': page,
+            'area': town_code,
             'per_page': 20
         }
         response = requests.get(url, params=payload)
@@ -24,7 +25,7 @@ def get_keyword_statistics(keyword):
 
         jobs.extend(page_response['items'])
 
-        if page == pages_number - 1:
+        if page >= pages_number - 1:
             break
 
     vacancies_found = page_response['found']
@@ -38,13 +39,13 @@ def get_keyword_statistics(keyword):
     return salaries, vacancies_found
 
 
-def get_hh_job_statistics(keywords):
-    job_analysis = {x: {} for x in keywords}
+def get_hh_job_statistics(keywords, town_code):
+    job_analysis = {}
 
     for keyword in keywords:
-        salaries, vacancies_found = get_keyword_statistics(keyword)
+        salaries, vacancies_found = get_keyword_statistics(keyword, town_code)
 
-        job_analysis[keyword] = save_analysis_result(
+        job_analysis[keyword] = get_analytics(
             salaries, vacancies_found
         )
 

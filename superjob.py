@@ -2,10 +2,7 @@ import itertools
 
 import requests
 
-from predict_salary import predict_rub_salary, save_analysis_result
-
-MOSCOW_CODE = 4
-DEVELOPMENT_CATEGORY = 48
+from predict_salary import predict_rub_salary, get_analytics
 
 
 def get_keyword_statistics(keyword, superjob_header, town_code, category_code):
@@ -42,17 +39,17 @@ def get_keyword_statistics(keyword, superjob_header, town_code, category_code):
     return salaries, vacancies_found
 
 
-def get_superjob_job_statistics(keywords, superjob_token):
+def get_superjob_job_statistics(keywords, superjob_token, town_code, category_code):
     superjob_header = {'X-Api-App-Id': superjob_token}
 
-    job_analysis = {x: {} for x in keywords}
+    job_analysis = {}
 
     for keyword in keywords:
         salaries, vacancies_found = get_keyword_statistics(
-            keyword, superjob_header, MOSCOW_CODE, DEVELOPMENT_CATEGORY
+            keyword, superjob_header, town_code, category_code
         )
 
-        job_analysis[keyword] = save_analysis_result(
+        job_analysis[keyword] = get_analytics(
             salaries, vacancies_found
         )
 

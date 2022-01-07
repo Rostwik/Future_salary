@@ -6,6 +6,10 @@ from hh import get_hh_job_statistics
 from superjob import get_superjob_job_statistics
 from table_view import get_vacancies_table
 
+SJ_MOSCOW_CODE = 4
+HH_MOSCOW_CODE = 1
+SJ_DEVELOPMENT_CATEGORY = 48
+
 
 def main():
     load_dotenv()
@@ -24,10 +28,14 @@ def main():
         'Scratch',
     ]
 
-    hh_jobs = get_hh_job_statistics(programming_languages)
+    hh_jobs = get_hh_job_statistics(programming_languages, HH_MOSCOW_CODE)
     table_instance = get_vacancies_table(hh_jobs, 'HeadHunter Moscow')
     print(table_instance.table)
-    superjobs_jobs = get_superjob_job_statistics(programming_languages, superjob_token)
+    superjobs_jobs = get_superjob_job_statistics(
+        programming_languages,
+        superjob_token,
+        SJ_MOSCOW_CODE,
+        SJ_DEVELOPMENT_CATEGORY)
     table_instance = get_vacancies_table(superjobs_jobs, 'SuperJob Moscow')
     print(table_instance.table)
 
