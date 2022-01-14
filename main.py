@@ -28,9 +28,9 @@ def main():
         'Scratch',
     ]
 
-    # hh_jobs = get_hh_job_statistics(programming_languages, HH_MOSCOW_CODE)
-    # table_instance = get_vacancies_table(hh_jobs, 'HeadHunter Moscow')
-    # print(table_instance.table)
+    hh_jobs = get_hh_job_statistics(programming_languages, HH_MOSCOW_CODE)
+    table_instance = get_vacancies_table(hh_jobs, 'HeadHunter Moscow')
+    print(table_instance.table)
     superjobs_jobs = get_superjob_job_statistics(
         programming_languages,
         superjob_token,
